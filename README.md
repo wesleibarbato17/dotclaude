@@ -76,6 +76,21 @@ Conferir que o CLI do editor está no `PATH`:
   extensão própria — e parte depende de API que a Anthropic ainda não expôs.
 - **Não transforma o app Desktop em IDE.** Diff no editor exige rodar dentro do editor.
 
+## Dúvidas comuns
+
+**"A aba fecha quando clico em Aceitar — o hook quebrou?"**
+Não. A aba de *preview* do diff é do próprio Claude Code e **fecha sozinha ao Aceitar/Rejeitar** —
+comportamento nativo, não é o hook. O hook reabre o arquivo como aba normal ~2s depois, e essa fica.
+Se esperar ~3s e ela não voltar, aí sim investigue (CLI no `PATH`? rodando dentro do IDE?).
+
+**"Dá pra ter várias abas abertas ao mesmo tempo?"**
+Sim — cada arquivo tocado vira a própria aba; elas **empilham**, não substituem a anterior
+(`--reuse-window` reusa a *janela*, não a aba).
+
+**"Posso pôr o hook no `~/.claude` global, pra valer em todo projeto?"**
+Não recomendado: global ele dispara em **todos** os projetos abertos no IDE (foi a iteração #1 que
+falhou). Deixe em `.claude/settings.json` do projeto.
+
 ## Histórico — iterações do hook que falharam antes
 
 1. **Hook global em `~/.claude/settings.json`** → disparava em qualquer sessão Claude Code
